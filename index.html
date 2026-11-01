@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboards — Johnny Iver</title>
+    <meta name="description" content="Galeria de dashboards Grafana construídas por Johnny Iver — monitoramento de infraestrutura, observabilidade e visualização de dados.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f1115;
+            --bg-panel: #181b21;
+            --bg-card: #14171d;
+            --border-color: #2f343e;
+            --accent-color: #e02f44;
+            --accent-hover: #f04458;
+            --good: #4fd18b;
+            --warn: #e0a540;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --font-sans: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { color: inherit; }
+
+        header {
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-panel);
+        }
+
+        .header-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: -0.01em;
+        }
+
+        .brand svg { flex-shrink: 0; }
+
+        nav { display: flex; gap: 20px; align-items: center; }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 13.5px;
+            font-weight: 500;
+            transition: color 0.15s ease;
+        }
+
+        nav a:hover { color: var(--text-primary); }
+
+        nav a.active { color: var(--text-primary); }
+
+        main { max-width: 1100px; margin: 0 auto; padding: 56px 24px 80px; }
+
+        .intro { max-width: 680px; margin-bottom: 48px; }
+
+        .eyebrow {
+            font-family: var(--font-mono);
+            font-size: 11.5px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent-hover);
+            margin: 0 0 12px;
+        }
+
+        h1 {
+            font-size: 30px;
+            line-height: 1.25;
+            letter-spacing: -0.02em;
+            margin: 0 0 14px;
+        }
+
+        .intro p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+            margin: 0 0 8px;
+        }
+
+        .note {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 18px;
+            padding: 8px 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 12.5px;
+            color: var(--text-secondary);
+        }
+
+        .note .dot {
+            width: 7px; height: 7px; border-radius: 50%;
+            background: var(--good); flex-shrink: 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
+            gap: 28px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-media {
+            background: #0b0d11;
+            border-bottom: 1px solid var(--border-color);
+            line-height: 0;
+            max-height: 520px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-media img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+            object-position: top center;
+        }
+
+        .card-media::after {
+            content: "";
+            position: absolute;
+            left: 0; right: 0; bottom: 0;
+            height: 64px;
+            background: linear-gradient(to bottom, transparent, var(--bg-card));
+            pointer-events: none;
+        }
+
+        .card-body { padding: 18px 20px 20px; }
+
+        .card-tag {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 10.5px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--accent-hover);
+            margin-bottom: 8px;
+        }
+
+        .card h2 {
+            font-size: 17px;
+            margin: 0 0 8px;
+            letter-spacing: -0.01em;
+        }
+
+        .card p {
+            font-size: 13.5px;
+            line-height: 1.55;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .stack {
+            margin-top: 12px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .stack span {
+            font-family: var(--font-mono);
+            font-size: 10.5px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 28px 24px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 12.5px;
+        }
+
+        footer a { color: var(--text-secondary); text-decoration: underline; text-underline-offset: 2px; }
+        footer a:hover { color: var(--text-primary); }
+
+        @media (max-width: 540px) {
+            .grid { grid-template-columns: 1fr; }
+            h1 { font-size: 24px; }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-inner">
+            <div class="brand">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M2 17L12 22L22 17" stroke="#ffffff" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M2 12L12 17L22 12" stroke="#ffffff" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                Johnny Iver
+            </div>
+            <nav>
+                <a href="https://iverlab.com.br" target="_blank" rel="noopener">Zabbix API Helper</a>
+                <a href="#" class="active">Dashboards</a>
+                <a href="https://github.com/JohnnyIver" target="_blank" rel="noopener">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="intro">
+            <p class="eyebrow">Portfólio · Observabilidade</p>
+            <h1>Dashboards Grafana</h1>
+            <p>
+                Uma seleção de dashboards que construí simulando o monitoramento de um ambiente
+                Windows Server crítico (SAP ERP, SQL Server e um portal IIS), usando dados mock
+                para demonstrar design de painéis, hierarquia de informação e visualizações
+                customizadas em HTML Graphics.
+            </p>
+            <div class="note">
+                <span class="dot"></span>
+                Ambiente de demonstração — dados sintéticos, sem conexão com sistemas reais.
+            </div>
+        </div>
+
+        <div class="grid">
+            <article class="card">
+                <div class="card-media">
+                    <img src="assets/visao.webp" alt="Visão geral da dashboard: topologia de serviços, KPIs e terminal PowerShell" loading="lazy">
+                </div>
+                <div class="card-body">
+                    <span class="card-tag">Visão geral</span>
+                    <h2>Topologia e saúde do servidor</h2>
+                    <p>
+                        KPIs de CPU, memória, rede e usuários ativos, topologia animada das
+                        camadas (usuários → IIS → SAP ERP → SQL Server → volumes) e um terminal
+                        PowerShell simulando logs em tempo real.
+                    </p>
+                    <div class="stack">
+                        <span>Node Graph</span>
+                        <span>HTML Graphics</span>
+                        <span>TestData</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-media">
+                    <img src="assets/desempenho.webp" alt="Aba de desempenho: anéis de CPU, memória e temperatura, núcleos e tráfego de rede" loading="lazy">
+                </div>
+                <div class="card-body">
+                    <span class="card-tag">Desempenho</span>
+                    <h2>Anéis de utilização e núcleos de CPU</h2>
+                    <p>
+                        Gauges radiais customizados (SVG + HTML Graphics) substituindo os
+                        velocímetros nativos, uso por núcleo com paleta por família de recurso,
+                        e tráfego de rede RX/TX com unidade correta (Mbps).
+                    </p>
+                    <div class="stack">
+                        <span>SVG custom gauge</span>
+                        <span>Thresholds</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-media">
+                    <img src="assets/discos.webp" alt="Aba de discos: uso por volume, saúde por volume e mapa de setores" loading="lazy">
+                </div>
+                <div class="card-body">
+                    <span class="card-tag">Discos</span>
+                    <h2>Mapa de setores por volume</h2>
+                    <p>
+                        Saúde SMART, temperatura, horas ligado e latência calculadas
+                        individualmente para cada volume (C:, D:, E:), com um "mapa de setores"
+                        em HTML Graphics simulando o estado físico de cada unidade.
+                    </p>
+                    <div class="stack">
+                        <span>HTML Graphics</span>
+                        <span>Per-volume metrics</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-media">
+                    <img src="assets/servicos.webp" alt="Aba de serviços e usuários: tabela de serviços Windows e sessões ativas" loading="lazy">
+                </div>
+                <div class="card-body">
+                    <span class="card-tag">Serviços e usuários</span>
+                    <h2>Serviços Windows e sessões ativas</h2>
+                    <p>
+                        Status dos serviços críticos (com indicação visual imediata de falha),
+                        e sessões de usuário com tipo, grupo, privilégio administrativo e duração.
+                    </p>
+                    <div class="stack">
+                        <span>Status dots</span>
+                        <span>Tabular data</span>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <footer>
+        Feito com Grafana OSS · <a href="https://github.com/JohnnyIver" target="_blank" rel="noopener">github.com/JohnnyIver</a>
+    </footer>
+</body>
+
+</html>
