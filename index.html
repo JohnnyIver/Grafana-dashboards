@@ -29,8 +29,6 @@
 
         * { box-sizing: border-box; }
 
-        html { scroll-behavior: smooth; }
-
         body {
             margin: 0;
             background-color: var(--bg-dark);
@@ -83,12 +81,11 @@
         }
 
         nav a:hover { color: var(--text-primary); }
-
         nav a.active { color: var(--text-primary); }
 
         main { max-width: 1100px; margin: 0 auto; padding: 56px 24px 80px; }
 
-        .intro { max-width: 680px; margin-bottom: 36px; }
+        .intro { max-width: 680px; margin-bottom: 44px; }
 
         .eyebrow {
             font-family: var(--font-mono);
@@ -113,143 +110,52 @@
             margin: 0 0 8px;
         }
 
-        .note {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 18px;
-            padding: 8px 14px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            font-size: 12.5px;
-            color: var(--text-secondary);
-        }
-
-        .note .dot {
-            width: 7px; height: 7px; border-radius: 50%;
-            background: var(--good); flex-shrink: 0;
-            animation: blip 2s ease-in-out infinite;
-        }
-        @keyframes blip { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
-
-        /* decorative terminal */
-        .term {
-            margin: 28px 0 48px;
-            background: #0a0b0d;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            overflow: hidden;
-            max-width: 560px;
-            box-shadow: 0 20px 50px -25px rgba(0,0,0,0.7);
-        }
-        .term-bar {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            padding: 10px 13px;
-            background: #14171b;
-            border-bottom: 1px solid var(--border-color);
-        }
-        .term-bar i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-        .term-bar i:nth-child(1) { background: #ff5f57; }
-        .term-bar i:nth-child(2) { background: #febc2e; }
-        .term-bar i:nth-child(3) { background: #28c840; }
-        .term-bar span {
-            margin-left: 8px;
-            font-family: var(--font-mono);
-            font-size: 11px;
-            color: var(--text-secondary);
-        }
-        .term-body {
-            padding: 14px 16px 18px;
-            font-family: var(--font-mono);
-            font-size: 12.5px;
-            line-height: 1.8;
-            min-height: 140px;
-        }
-        .term-body .line { white-space: pre-wrap; opacity: 0; }
-        .term-body .line.show { opacity: 1; }
-        .term-ok { color: var(--good); }
-        .term-warn { color: var(--warn); }
-        .term-dim { color: var(--text-secondary); }
-        .term-cursor {
-            display: inline-block;
-            width: 7px; height: 13px;
-            background: var(--good);
-            vertical-align: -2px;
-            animation: blink 1s step-end infinite;
-        }
-        @keyframes blink { 50% { opacity: 0; } }
-
         .grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 28px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 22px;
         }
 
-        .card {
+        .dash-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 10px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            opacity: 0;
-            transform: translateY(28px);
-            transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
         }
-        .card.in-view { opacity: 1; transform: translateY(0); }
-        .card:hover { border-color: #3a4150; }
+        .dash-card:hover {
+            transform: translateY(-4px);
+            border-color: #3a4150;
+            box-shadow: 0 16px 36px -18px rgba(0,0,0,0.6);
+        }
 
-        .card-media {
+        .dash-thumb {
             background: #0b0d11;
             border-bottom: 1px solid var(--border-color);
-            line-height: 0;
-            cursor: zoom-in;
-            position: relative;
+            aspect-ratio: 16 / 10;
             overflow: hidden;
+            line-height: 0;
         }
-
-        .card-media img {
+        .dash-thumb img {
             width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
             display: block;
-            transition: transform 0.4s ease;
+            transition: transform 0.35s ease;
         }
-        .card-media:hover img { transform: scale(1.015); }
+        .dash-card:hover .dash-thumb img { transform: scale(1.03); }
 
-        .zoom-hint {
-            position: absolute;
-            right: 10px; bottom: 10px;
-            background: rgba(10,11,13,0.75);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 5px 9px;
-            font-family: var(--font-mono);
-            font-size: 10.5px;
-            color: var(--text-secondary);
-            display: flex;
+        .dash-body { padding: 16px 18px 18px; flex: 1; display: flex; flex-direction: column; }
+
+        .dash-tag {
+            display: inline-flex;
             align-items: center;
-            gap: 5px;
-            opacity: 0;
-            transition: opacity 0.2s ease;
-        }
-        .card-media:hover .zoom-hint { opacity: 1; }
-
-        .card-body { padding: 18px 20px 20px; }
-
-        .card-tag {
-            display: inline-block;
-            font-family: var(--font-mono);
-            font-size: 10.5px;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            color: var(--accent-hover);
-            margin-bottom: 8px;
-        }
-
-        .mock-badge {
-            display: inline-block;
+            gap: 6px;
             font-family: var(--font-mono);
             font-size: 10px;
             letter-spacing: 0.04em;
@@ -259,37 +165,36 @@
             border: 1px solid rgba(224, 165, 64, 0.3);
             border-radius: 4px;
             padding: 2px 7px;
-            margin: 0 0 8px 8px;
+            width: fit-content;
+            margin-bottom: 10px;
         }
 
-        .card h2 {
-            font-size: 17px;
-            margin: 0 0 8px;
-            letter-spacing: -0.01em;
-        }
+        .dash-card h2 { font-size: 16px; margin: 0 0 6px; letter-spacing: -0.01em; }
+        .dash-card p { font-size: 13px; line-height: 1.5; color: var(--text-secondary); margin: 0 0 14px; flex: 1; }
 
-        .card p {
-            font-size: 13.5px;
-            line-height: 1.55;
-            color: var(--text-secondary);
-            margin: 0;
-        }
-
-        .stack {
-            margin-top: 12px;
-            display: flex;
-            flex-wrap: wrap;
+        .dash-open {
+            font-family: var(--font-mono);
+            font-size: 11.5px;
+            color: var(--text-primary);
+            display: inline-flex;
+            align-items: center;
             gap: 6px;
         }
+        .dash-open svg { transition: transform 0.2s ease; }
+        .dash-card:hover .dash-open svg { transform: translateX(3px); }
 
-        .stack span {
-            font-family: var(--font-mono);
-            font-size: 10.5px;
-            padding: 3px 8px;
-            border-radius: 4px;
-            background: var(--bg-panel);
-            border: 1px solid var(--border-color);
+        .more-card {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 8px;
+            border: 1px dashed var(--border-color);
+            border-radius: 10px;
+            padding: 40px 20px;
             color: var(--text-secondary);
+            font-size: 13px;
+            text-align: center;
         }
 
         footer {
@@ -303,47 +208,7 @@
         footer a { color: var(--text-secondary); text-decoration: underline; text-underline-offset: 2px; }
         footer a:hover { color: var(--text-primary); }
 
-        /* lightbox */
-        .lightbox {
-            position: fixed;
-            inset: 0;
-            background: rgba(6,7,9,0.92);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 20px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s ease;
-            z-index: 100;
-        }
-        .lightbox.open { opacity: 1; pointer-events: auto; }
-        .lightbox img {
-            max-width: 100%;
-            max-height: 100%;
-            border-radius: 8px;
-            box-shadow: 0 30px 80px -20px rgba(0,0,0,0.8);
-            transform: scale(0.96);
-            transition: transform 0.2s ease;
-        }
-        .lightbox.open img { transform: scale(1); }
-        .lightbox-close {
-            position: fixed;
-            top: 22px; right: 26px;
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-        .lightbox-close:hover { border-color: var(--accent-hover); color: var(--accent-hover); }
-
         @media (max-width: 540px) {
-            .grid { grid-template-columns: 1fr; }
             h1 { font-size: 24px; }
         }
     </style>
@@ -365,7 +230,7 @@
             </a>
             <nav>
                 <a href="https://zabbix-api-helper.iverlab.com.br" target="_blank" rel="noopener">Zabbix API Helper</a>
-                <a href="#" class="active">Dashboards</a>
+                <a href="/" class="active">Dashboards</a>
                 <a href="https://github.com/JohnnyIver" target="_blank" rel="noopener">GitHub</a>
             </nav>
         </div>
@@ -376,194 +241,37 @@
             <p class="eyebrow">Portfólio · Observabilidade</p>
             <h1>Dashboards Grafana</h1>
             <p>
-                Uma seleção de dashboards que construí simulando o monitoramento de um ambiente
-                Windows Server crítico (SAP ERP, SQL Server e um portal IIS), usando dados mock
-                para demonstrar design de painéis, hierarquia de informação e visualizações
-                customizadas em HTML Graphics.
+                Galeria de dashboards que venho construindo no Grafana. Clica numa pra ver os
+                detalhes — painéis, decisões de design e explicação do que cada tela mostra.
+                Todas usam dados mock, sem conexão com sistemas reais.
             </p>
-            <div class="note">
-                <span class="dot"></span>
-                Ambiente de demonstração — dados sintéticos, sem conexão com sistemas reais.
-            </div>
-        </div>
-
-        <div class="term">
-            <div class="term-bar"><i></i><i></i><i></i><span>status.sh</span></div>
-            <div class="term-body" id="term-body"></div>
         </div>
 
         <div class="grid">
-            <article class="card">
-                <div class="card-media" data-full="assets/visao.webp?v=2">
-                    <img src="assets/visao.webp?v=2" alt="Visão geral da dashboard: topologia de serviços, KPIs e terminal PowerShell" loading="lazy">
-                    <span class="zoom-hint">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M8 11h6M11 8v6"/></svg>
-                        expandir
+            <a class="dash-card" href="/windows-overview/">
+                <div class="dash-thumb">
+                    <img src="windows-overview/assets/visao.webp?v=2" alt="Dashboard de monitoramento de um servidor Windows crítico" loading="lazy">
+                </div>
+                <div class="dash-body">
+                    <span class="dash-tag">dados ficticios</span>
+                    <h2>Windows Server crítico</h2>
+                    <p>Monitoramento simulado de um servidor rodando SAP ERP, SQL Server e um portal IIS — 4 telas, do geral ao detalhe de disco.</p>
+                    <span class="dash-open">
+                        ver detalhes
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                     </span>
                 </div>
-                <div class="card-body">
-                    <span class="card-tag">Visão geral</span>
-                    <span class="mock-badge">dados ficticios</span>
-                    <h2>O que está acontecendo no servidor agora</h2>
-                    <p>
-                        Resume a saúde do servidor: uso de CPU, memória e rede, quantos usuários
-                        estão conectados, e o caminho que os dados percorrem entre os serviços
-                        (usuário → site → SAP → banco de dados). Todos os números são simulados.
-                    </p>
-                    <div class="stack">
-                        <span>Node Graph</span>
-                        <span>HTML Graphics</span>
-                        <span>TestData</span>
-                    </div>
-                </div>
-            </article>
+            </a>
 
-            <article class="card">
-                <div class="card-media" data-full="assets/desempenho.webp?v=2">
-                    <img src="assets/desempenho.webp?v=2" alt="Aba de desempenho: anéis de CPU, memória e temperatura, núcleos e tráfego de rede" loading="lazy">
-                    <span class="zoom-hint">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M8 11h6M11 8v6"/></svg>
-                        expandir
-                    </span>
-                </div>
-                <div class="card-body">
-                    <span class="card-tag">Desempenho</span>
-                    <span class="mock-badge">dados ficticios</span>
-                    <h2>Uso de CPU, memória e rede</h2>
-                    <p>
-                        Quanto cada núcleo do processador está ocupado, consumo de memória,
-                        temperatura, e quanto de dados entra e sai do servidor pela rede.
-                        Valores simulados, atualizando como se fosse um servidor real.
-                    </p>
-                    <div class="stack">
-                        <span>SVG custom gauge</span>
-                        <span>Thresholds</span>
-                    </div>
-                </div>
-            </article>
-
-            <article class="card">
-                <div class="card-media" data-full="assets/discos.webp?v=2">
-                    <img src="assets/discos.webp?v=2" alt="Aba de discos: uso por volume, saúde por volume e mapa de setores" loading="lazy">
-                    <span class="zoom-hint">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M8 11h6M11 8v6"/></svg>
-                        expandir
-                    </span>
-                </div>
-                <div class="card-body">
-                    <span class="card-tag">Discos</span>
-                    <span class="mock-badge">dados ficticios</span>
-                    <h2>Saúde dos discos</h2>
-                    <p>
-                        Mostra se os discos C:, D: e E: estão bem: espaço usado, temperatura,
-                        e um "mapa de setores" simulando o estado físico de cada unidade de
-                        armazenamento. Tudo gerado artificialmente para a demonstração.
-                    </p>
-                    <div class="stack">
-                        <span>HTML Graphics</span>
-                        <span>Per-volume metrics</span>
-                    </div>
-                </div>
-            </article>
-
-            <article class="card">
-                <div class="card-media" data-full="assets/servicos.webp?v=2">
-                    <img src="assets/servicos.webp?v=2" alt="Aba de serviços e usuários: tabela de serviços Windows e sessões ativas" loading="lazy">
-                    <span class="zoom-hint">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M8 11h6M11 8v6"/></svg>
-                        expandir
-                    </span>
-                </div>
-                <div class="card-body">
-                    <span class="card-tag">Serviços e usuários</span>
-                    <span class="mock-badge">dados ficticios</span>
-                    <h2>Serviços do Windows e quem está conectado</h2>
-                    <p>
-                        Lista os serviços importantes do servidor (SAP, SQL Server, IIS) e avisa
-                        na hora se algum parar, além de mostrar quem está logado, com que
-                        permissão e há quanto tempo. Nomes e sessões fictícios.
-                    </p>
-                    <div class="stack">
-                        <span>Status dots</span>
-                        <span>Tabular data</span>
-                    </div>
-                </div>
-            </article>
+            <div class="more-card">
+                Mais dashboards em breve
+            </div>
         </div>
     </main>
 
     <footer>
         Feito com Grafana OSS · <a href="https://github.com/JohnnyIver" target="_blank" rel="noopener">github.com/JohnnyIver</a>
     </footer>
-
-    <div class="lightbox" id="lightbox">
-        <div class="lightbox-close" id="lightbox-close">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-        </div>
-        <img id="lightbox-img" src="" alt="">
-    </div>
-
-    <script>
-        // scroll reveal
-        const cards = document.querySelectorAll('.card');
-        const io = new IntersectionObserver((entries) => {
-            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); });
-        }, { threshold: 0.15 });
-        cards.forEach(c => io.observe(c));
-
-        // lightbox
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        document.querySelectorAll('.card-media').forEach(media => {
-            media.addEventListener('click', () => {
-                lightboxImg.src = media.dataset.full;
-                lightbox.classList.add('open');
-            });
-        });
-        function closeLightbox() { lightbox.classList.remove('open'); }
-        document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
-        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
-
-        // decorative terminal typing loop
-        const script = [
-            ['dim', '$ status --watch windows-overview-mock'],
-            ['ok',  'OK  WIN-WEB-01     iis        285 req/s'],
-            ['ok',  'OK  WIN-PRD-APP01  sap-erp     71 dialogs/s'],
-            ['ok',  'OK  WIN-DB-01      sql-server 317 batches/s'],
-            ['warn','WARN  spooler         servico parado'],
-            ['ok',  'OK  disco C:        setores saudaveis'],
-            ['dim', '$ _'],
-        ];
-        const termBody = document.getElementById('term-body');
-        let lineEls = [];
-        function buildLines() {
-            termBody.innerHTML = '';
-            lineEls = script.map(([cls, text]) => {
-                const div = document.createElement('div');
-                div.className = 'line term-' + cls;
-                div.textContent = text;
-                termBody.appendChild(div);
-                return div;
-            });
-        }
-        function playTerm() {
-            buildLines();
-            lineEls.forEach((el, i) => {
-                setTimeout(() => el.classList.add('show'), i * 450);
-            });
-        }
-        const termObserver = new IntersectionObserver((entries) => {
-            entries.forEach(e => {
-                if (e.isIntersecting) {
-                    playTerm();
-                    setInterval(playTerm, script.length * 450 + 2600);
-                    termObserver.disconnect();
-                }
-            });
-        }, { threshold: 0.3 });
-        termObserver.observe(document.querySelector('.term'));
-    </script>
 </body>
 
 </html>
