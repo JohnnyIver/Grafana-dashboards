@@ -184,7 +184,7 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
+            grid-template-columns: 1fr;
             gap: 28px;
         }
 
@@ -246,6 +246,20 @@
             text-transform: uppercase;
             color: var(--accent-hover);
             margin-bottom: 8px;
+        }
+
+        .mock-badge {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--warn);
+            background: rgba(224, 165, 64, 0.1);
+            border: 1px solid rgba(224, 165, 64, 0.3);
+            border-radius: 4px;
+            padding: 2px 7px;
+            margin: 0 0 8px 8px;
         }
 
         .card h2 {
@@ -389,11 +403,12 @@
                 </div>
                 <div class="card-body">
                     <span class="card-tag">Visão geral</span>
-                    <h2>Topologia e saúde do servidor</h2>
+                    <span class="mock-badge">dados ficticios</span>
+                    <h2>O que está acontecendo no servidor agora</h2>
                     <p>
-                        KPIs de CPU, memória, rede e usuários ativos, topologia animada das
-                        camadas (usuários → IIS → SAP ERP → SQL Server → volumes) e um terminal
-                        PowerShell simulando logs em tempo real.
+                        Resume a saúde do servidor: uso de CPU, memória e rede, quantos usuários
+                        estão conectados, e o caminho que os dados percorrem entre os serviços
+                        (usuário → site → SAP → banco de dados). Todos os números são simulados.
                     </p>
                     <div class="stack">
                         <span>Node Graph</span>
@@ -413,11 +428,12 @@
                 </div>
                 <div class="card-body">
                     <span class="card-tag">Desempenho</span>
-                    <h2>Anéis de utilização e núcleos de CPU</h2>
+                    <span class="mock-badge">dados ficticios</span>
+                    <h2>Uso de CPU, memória e rede</h2>
                     <p>
-                        Gauges radiais customizados (SVG + HTML Graphics) substituindo os
-                        velocímetros nativos, uso por núcleo com paleta por família de recurso,
-                        e tráfego de rede RX/TX com unidade correta (Mbps).
+                        Quanto cada núcleo do processador está ocupado, consumo de memória,
+                        temperatura, e quanto de dados entra e sai do servidor pela rede.
+                        Valores simulados, atualizando como se fosse um servidor real.
                     </p>
                     <div class="stack">
                         <span>SVG custom gauge</span>
@@ -436,11 +452,12 @@
                 </div>
                 <div class="card-body">
                     <span class="card-tag">Discos</span>
-                    <h2>Mapa de setores por volume</h2>
+                    <span class="mock-badge">dados ficticios</span>
+                    <h2>Saúde dos discos</h2>
                     <p>
-                        Saúde SMART, temperatura, horas ligado e latência calculadas
-                        individualmente para cada volume (C:, D:, E:), com um "mapa de setores"
-                        em HTML Graphics simulando o estado físico de cada unidade.
+                        Mostra se os discos C:, D: e E: estão bem: espaço usado, temperatura,
+                        e um "mapa de setores" simulando o estado físico de cada unidade de
+                        armazenamento. Tudo gerado artificialmente para a demonstração.
                     </p>
                     <div class="stack">
                         <span>HTML Graphics</span>
@@ -459,10 +476,12 @@
                 </div>
                 <div class="card-body">
                     <span class="card-tag">Serviços e usuários</span>
-                    <h2>Serviços Windows e sessões ativas</h2>
+                    <span class="mock-badge">dados ficticios</span>
+                    <h2>Serviços do Windows e quem está conectado</h2>
                     <p>
-                        Status dos serviços críticos (com indicação visual imediata de falha),
-                        e sessões de usuário com tipo, grupo, privilégio administrativo e duração.
+                        Lista os serviços importantes do servidor (SAP, SQL Server, IIS) e avisa
+                        na hora se algum parar, além de mostrar quem está logado, com que
+                        permissão e há quanto tempo. Nomes e sessões fictícios.
                     </p>
                     <div class="stack">
                         <span>Status dots</span>
